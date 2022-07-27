@@ -180,24 +180,7 @@ treeJSON = d3.json("arbolcollapsed.json", function(error, treeData) {
 
 
     // Define the drag listeners for drag/drop behaviour of nodes.
-    dragListener = d3.behavior.drag()
-        .on("dragstart", function(d) {
-            if (d == root) {
-                return;
-            }
-            dragStarted = true;
-            nodes = tree.nodes(d);
-            d3.event.sourceEvent.stopPropagation();
-            // it's important that we suppress the mouseover event on the node being dragged. Otherwise it will absorb the mouseover event and the underlying node will not detect it d3.select(this).attr('pointer-events', 'none');
-        })
-        .on("drag", function(d) {
-            if (d == root) {
-                return;
-            }
-            if (dragStarted) {
-                domNode = this;
-                initiateDrag(d, domNode);
-            }
+    
 
             // get coords of mouseEvent relative to svg container to allow for panning
             relCoords = d3.mouse($('svg').get(0));
@@ -395,7 +378,7 @@ treeJSON = d3.json("arbolcollapsed.json", function(error, treeData) {
             d.y = (d.depth * 500); //500px per level.
         });
 
-        // Update the nodes…
+        // Update the nodesÂ…
         node = svgGroup.selectAll("g.node")
             .data(nodes, function(d) {
                 return d.id || (d.id = ++i);
@@ -489,7 +472,7 @@ treeJSON = d3.json("arbolcollapsed.json", function(error, treeData) {
         nodeExit.select("text")
             .style("fill-opacity", 0);
 
-        // Update the links…
+        // Update the linksÂ…
         var link = svgGroup.selectAll("path.link")
             .data(links, function(d) {
                 return d.target.id;
